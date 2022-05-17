@@ -11,11 +11,14 @@ public class MarvelCharacter {
     private int id;
     private String name;
     private String description;
+    private Thumbnail thumbnail;
 
-    public MarvelCharacter(int id, String name, String description) {
+    public MarvelCharacter(int id, String name, String description, Thumbnail thumbnail) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.thumbnail = thumbnail;
+
     }
 
     public MarvelCharacter() {
@@ -45,12 +48,21 @@ public class MarvelCharacter {
         this.description = description;
     }
 
+    public Thumbnail getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Thumbnail thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     @Override
     public String toString() {
         return "MarvelCharacter{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", thumbnail=" + thumbnail +
                 '}';
     }
 }

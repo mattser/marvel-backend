@@ -21,7 +21,7 @@ public class Auth_Key {
 
     public String getURI () {
         Long ts = getTimestamp();
-        return "&ts=" + ts + "&apikey=" + getPublicKey() + "&hash=" + getMd5(ts+getPrivateKey()+getPublicKey());
+        return "ts=" + ts + "&apikey=" + getPublicKey() + "&hash=" + getMd5(ts+getPrivateKey()+getPublicKey());
     }
 
     private String getMd5 (String input) {
