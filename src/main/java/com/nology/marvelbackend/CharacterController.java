@@ -3,6 +3,9 @@ package com.nology.marvelbackend;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,9 +61,14 @@ public class CharacterController {
         return ResponseEntity.status(HttpStatus.OK).body(characterIds);
     }
 
-    @GetMapping("characters/{id}")
+    @GetMapping("/characters/{id}")
     public ResponseEntity<MarvelCharacter> getCharacterById (@PathVariable String id) {
 
+
+        return ResponseEntity.status(HttpStatus.OK).body(characterById(id));
+    }
+
+    private MarvelCharacter characterById (String id) {
         JsonNode response = webClient.get()
                 .uri("characters/"+id+"?"+auth_key.getURI())
                 .retrieve()
@@ -81,7 +89,26 @@ public class CharacterController {
             characterThumbnail.setExtension(characterJson.path("thumbnail").path("extension").asText());
             character.setThumbnail(characterThumbnail);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(character);
+        return character;
+    }
+
+    @GetMapping("/characters/{id}/{languageCode}")
+    public ResponseEntity<MarvelCharacter> getCharacterByIdAndLanguage (@PathVariable String id, @PathVariable String languageCode) {
+
+        MarvelCharacter characterToTranslate = characterById(id);
+
+        Translate translate = TranslateOptions
+                .newBuilder()
+                .setApiKey(auth_key.getGoogleKey())
+                .setTargetLanguage(languageCode)
+                .build()
+                .getService();
+
+        Translation translation = translate.translate(characterToTranslate.getDescription());
+
+        characterToTranslate.setDescription(translation.getTranslatedText());
+
+        return ResponseEntity.status(HttpStatus.OK).body(characterToTranslate);
     }
 
 

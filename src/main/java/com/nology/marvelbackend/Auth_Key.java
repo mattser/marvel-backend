@@ -24,6 +24,10 @@ public class Auth_Key {
         return "ts=" + ts + "&apikey=" + getPublicKey() + "&hash=" + getMd5(ts+getPrivateKey()+getPublicKey());
     }
 
+    public String getGoogleKey() {
+        return "AIzaSyDvKv7TRkOAPkC4EKkr4rRIG4Mi6KjswdI";
+    }
+
     private String getMd5 (String input) {
 //        https://www.geeksforgeeks.org/md5-hash-in-java/
         try {
