@@ -14,8 +14,7 @@ Specification
 * Endpoint for retrieving a list off all the character IDs
 * Endpoint for retrieving a specific character by an ID
 * Endpoint for retrieving a specific character by an ID translated into another language
-
-
+* [OpenAPI Scheema Doucmentation](./OpenAPI/MarvelAPI.yaml)
 
 To Use
 ======
