@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+    version: 1.0.0
+    title: Marvel Back End
+    description: A Proxy API which interacts with the Marvel API and GCloud Services
+servers:
+    - url: localhost:8080
+paths:
+  /characters:
+    get:
+      summary: Returns a list of IDs
+      description: 'OK: Returns Integer List of all Marvel character Ids'
+      responses:
+        200:
+          description: List of character IDs
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                    type: integer
+                    description: Character ID
+
+    
+  /characters/{id}:
+    get:
+      summary: Get a characters by ID
+      description: Returns a Marvel character for its IDs supplied
+      parameters:
+        - in: path
+          name: id
+          schema:
+              type: string
+          required: true
+          description: String ID of the character to get
+      responses:
+        200:
+          description: 'OK: Character with ID'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Character ID
+                  name:
+                    type: string
+                    description: Character name
+                  description:
+                    type: string
+                    description: Character description in English
+                  thumbnail:
+                      type: object
+                      description: Location and type of thumbnai image
+                      properties:
+                        path:
+                          type: string
+                          description: File path of thumbnail image
+                        extension:
+                          type: string
+                          description: File extension of thumbnail image
+
+  /characters/{id}/{languageCode}:
+    get:
+      summary: Get a characters by ID in another language
+      description: Returns a Marvel character for its IDs supplied
+      parameters:
+        - in: path
+          name: id
+          schema:
+              type: string
+          required: true
+          description: String ID of the character to get
+        - in: path
+          name: languageCode
+          schema:
+            type: string
+          required: true
+          description: String ISO-639-1 language code to translate
+      responses:
+        200:
+          description: 'OK: Character with ID and translated description'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Character ID
+                  name:
+                    type: string
+                    description: Character name
+                  description:
+                    type: string
+                    description: Character description into desired language
+                  thumbnail:
+                      type: object
+                      description: Location and type of thumbnai image
+                      properties:
+                        path:
+                          type: string
+                          description: File path of thumbnail image
+                        extension:
+                          type: string
+                          description: File extension of thumbnail image
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+security:
+  - BasicAuth: []
