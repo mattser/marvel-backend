@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,10 @@ import java.util.stream.Collectors;
 @RestController
 public class CharacterController {
 
+    @Autowired
+    Auth_Key auth_key;
+
     WebClient webClient = WebClient.create("https://gateway.marvel.com/v1/public/");
-    Auth_Key auth_key = new Auth_Key();
     ObjectMapper mapper = new ObjectMapper();
     List<Integer> characterIds = new ArrayList<>();
 

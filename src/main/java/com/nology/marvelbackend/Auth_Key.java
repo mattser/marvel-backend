@@ -1,17 +1,34 @@
 package com.nology.marvelbackend;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Date;
 
+@Component
 public class Auth_Key {
 
+    @Value("${key.marvel.public}")
+    private String marvelPublicKey;
+
+    @Value("${key.marvel.private}")
+    private String marvelPrivateKey;
+
+    @Value("${key.google}")
+    private String googleKey;
+
     public String getPublicKey() {
-        return "844a9f7fd879379f964c117c04110cb2";
+        return marvelPublicKey;
     }
 
     public String getPrivateKey() {
-        return "8f64f31445c6f9115891aa3b87224a7384480e63";
+        return marvelPrivateKey;
+    }
+
+    public String getGoogleKey() {
+        return googleKey;
     }
 
     public long getTimestamp() {
@@ -20,12 +37,11 @@ public class Auth_Key {
     }
 
     public String getURI () {
+        System.out.println(marvelPrivateKey);
+        System.out.println(marvelPublicKey);
+        System.out.println(googleKey);
         Long ts = getTimestamp();
         return "ts=" + ts + "&apikey=" + getPublicKey() + "&hash=" + getMd5(ts+getPrivateKey()+getPublicKey());
-    }
-
-    public String getGoogleKey() {
-        return "AIzaSyDvKv7TRkOAPkC4EKkr4rRIG4Mi6KjswdI";
     }
 
     private String getMd5 (String input) {

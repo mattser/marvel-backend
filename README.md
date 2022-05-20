@@ -16,10 +16,25 @@ Specification
 * Endpoint for retrieving a specific character by an ID translated into another language
 * [OpenAPI Scheema Doucmentation](./OpenAPI/MarvelAPI.yaml)
 
+
+IMPORTANT
+=========
+
+This is a java spring boot application and can therefore be hosted or run locally. 
+
+**API KEYS ARE REQUIRED FOR THIS APP TO WORK**
+
+This is done by:
+* Create a file in src > main > java > resources and call it `keys.properties`
+* Create 3 properties with the name:
+  * `key.marvel.public =` your Marvel developer public API key
+  * `key.marvel.private =` your Marvel developer private API key
+  * `key.google =` your Google Cloud API key (Translation Service)
+
 To Use
 ======
 
-This is a java spring boot application and can therefore be hosted or run locally. The endpoints include:
+The endpoints include:
 
 * `/characters` Returns a list of all character IDs
 * `/characters/{id}` Returns information of a specific character with supplied character `id`
